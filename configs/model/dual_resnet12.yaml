@@ -1,0 +1,39 @@
+# DUAL ResNet-12 model configuration
+model:
+  name: dual_resnet12
+  backbone: resnet12
+  
+  # Backbone settings
+  backbone_config:
+    depth: 12
+    width_multiplier: 1.0
+    dropout: 0.1
+    avgpool_size: 5
+  
+  # Feature extraction
+  feature_dim: 640
+  normalize_features: true
+  
+  # DUAL-specific components
+  dual_alignment:
+    # Inter-set alignment (between different domains/datasets)
+    inter_set:
+      enabled: true
+      method: feature_alignment
+      alignment_dim: 128
+      temperature: 0.1
+      weight: 1.0
+      
+    # Intra-set alignment (within episodes)  
+    intra_set:
+      enabled: true
+      method: prototype_alignment
+      num_prototypes: null  # auto-determined by n_way
+      momentum: 0.9
+      weight: 0.5
+  
+  # Classification head
+  classifier:
+    type: cosine_similarity
+    temperature: 1.0
+    learnable_temperature: false

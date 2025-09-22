@@ -1,0 +1,35 @@
+# Configuration for miniImageNet dataset
+dataset:
+  name: miniImageNet
+  root: ./data/datasets/miniImageNet
+  image_size: 84
+  n_classes: 100
+  
+  splits:
+    train_classes: 64
+    val_classes: 16  
+    test_classes: 20
+  
+  episodes:
+    train: 600
+    val: 600
+    test: 1000
+
+# Data augmentation specific to miniImageNet
+augmentation:
+  enabled: true
+  transforms:
+    - RandomResizedCrop:
+        size: 84
+        scale: [0.8, 1.0]
+    - RandomHorizontalFlip:
+        p: 0.5
+    - ColorJitter:
+        brightness: 0.2
+        contrast: 0.2
+        saturation: 0.2
+        hue: 0.1
+    - ToTensor
+    - Normalize:
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
