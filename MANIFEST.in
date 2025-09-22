@@ -1,0 +1,19 @@
+# MANIFEST.in file for package distribution
+
+include README.md
+include LICENSE
+include requirements.txt
+include configs/*.yaml
+include configs/**/*.yaml
+include scripts/*.py
+include examples/*.py
+
+recursive-include src/dual *.py
+recursive-include tests *.py
+recursive-include docs *.md
+
+# Exclude unnecessary files
+exclude .gitignore
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude .DS_Store

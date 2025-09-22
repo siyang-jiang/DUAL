@@ -1,0 +1,6 @@
+# Step learning rate scheduler
+scheduler:
+  type: step
+  step_size: 50
+  gamma: 0.5
+  last_epoch: -1

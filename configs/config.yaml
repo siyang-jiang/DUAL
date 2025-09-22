@@ -1,0 +1,56 @@
+# Configuration for few-shot learning experiments with DUAL
+# Default settings for 5-way 1-shot and 5-way 5-shot experiments
+
+defaults:
+  - dataset: miniImageNet
+  - model: dual_resnet12
+  - optimizer: adam
+  - scheduler: step
+
+# Experiment settings
+experiment_name: dual_baseline
+seed: 42
+device: cuda
+
+# Few-shot learning settings
+n_way: 5
+n_shot: 1
+n_query: 15
+n_episodes: 600
+test_episodes: 1000
+
+# Training settings
+epochs: 200
+batch_size: 4
+learning_rate: 0.001
+weight_decay: 0.0005
+
+# Model settings
+backbone: resnet12
+feature_dim: 640
+temperature: 1.0
+
+# DUAL-specific settings
+inter_set_alignment:
+  enabled: true
+  method: "feature_alignment"
+  weight: 1.0
+
+intra_set_alignment:
+  enabled: true
+  method: "prototype_alignment"  
+  weight: 0.5
+
+# Logging and checkpointing
+log_interval: 100
+save_interval: 50
+checkpoint_dir: ./checkpoints
+log_dir: ./logs
+use_wandb: false
+
+# Data augmentation
+augmentation:
+  enabled: true
+  horizontal_flip: true
+  color_jitter: true
+  normalize: true
