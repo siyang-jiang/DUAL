@@ -3,6 +3,5 @@
 
 ### News
 
-- 🔥 Upload the training record of CIFAR-10
-- 🏆 DUAL (Siyang) got **Scholar Award** at **NeurIPS 2025**
 - 🔥 [2025-10-16] Release Code of DUAL
+- 🏆 [2025-10-12] DUAL (Siyang) got **Scholar Award** at **NeurIPS 2025**
