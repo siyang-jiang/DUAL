@@ -1,0 +1,92 @@
+{
+    "perturbations": {
+        "Noise":{
+            "Gaussian Noise": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "Shot Noise": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Blur":{
+            "Defocus Blur": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "Glass Blur": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "Zoom Blur": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Weather":{
+            "Snow": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "Frost": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "Brightness": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Digital":{
+            "Contrast": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "Pixelate": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "JPEG": [
+                1,
+                2,
+                3
+            ],
+            "Spatter": [
+                1,
+                2,
+                3
+            ]
+        }
+    }
+}

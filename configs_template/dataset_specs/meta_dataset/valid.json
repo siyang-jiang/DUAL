@@ -1,0 +1,41 @@
+{
+    "perturbations": {
+        "Noise":{
+            "Speckle Noise": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Blur":{
+            "Gaussian Blur": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Weather":{ 
+            "Spatter": [
+                4,
+                5
+            ],       
+            "Saturate": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Digital":{
+            "JPEG": [
+                4,
+                5
+            ]
+        }
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "class_names": [
+        "bottle",
+        "bowl",
+        "can",
+        "cup",
+        "plate",
+        "clock",
+        "keyboard",
+        "lamp",
+        "telephone",
+        "television",
+        "bed",
+        "chair",
+        "couch",
+        "table",
+        "wardrobe",
+        "bicycle",
+        "bus",
+        "motorcycle",
+        "pickup_truck",
+        "train",
+        "lawn_mower",
+        "rocket",
+        "streetcar",
+        "tank",
+        "tractor"
+    ],
+    "perturbations": {
+        "Noise":{
+            "Impulse Noise": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Blur":{
+            "Motion Blur": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Weather":{
+            "Fog": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        },
+        "Digital":{
+            "Elastic": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ],
+            "JPEG": [
+                4,
+                5
+            ],
+            "Spatter": [
+                4,
+                5
+            ]
+        }
+
+    }
+}
