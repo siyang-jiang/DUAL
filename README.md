@@ -1,4 +1,4 @@
-# Dual Alignment (DUAL) Few-Shot Learning Framework
+# [DUAL NeurIPS 2025] Dual Alignment Framework for Few-shot Learning with Inter-Set and Intra-Set Shifts
 
 This repository contains the official implementation of the paper *Dual Alignment Framework for Few-shot Learning with Inter-Set and Intra-Set Shifts*. DUAL aligns both inter-set and intra-set distribution shifts, delivering a robust baseline for few-shot learning under realistic corruptions. The code covers data preparation, ERM pre-training, meta adaptation, and a range of ablations.
 
