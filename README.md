@@ -4,8 +4,10 @@ This repository contains the official implementation of the paper *Dual Alignmen
 
 ### News
 
-- 🔥 [2025-10-16] Release Code of DUAL
-- 🏆 [2025-10-12] DUAL (Siyang) got **Scholar Award** at **NeurIPS 2025**
+- 🔥 [2025-10] Release Code of DUAL
+- 🏆 [2025-10] **Scholar Award** at **NeurIPS 2025**
+- 🔥 [2025-09] DUAL accepted by **NeurIPS 2025**
+
 
 ## Quick Start
 - **Environment**: Recommended Python 3.9.
