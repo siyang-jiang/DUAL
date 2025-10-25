@@ -1,4 +1,4 @@
-# [DUAL NeurIPS 2025] Dual Alignment Framework for Few-shot Learning with Inter-Set and Intra-Set Shifts
+# DUAK: Dual Alignment Framework for Few-shot Learning with Inter-Set and Intra-Set Shifts
 [![Paper](https://img.shields.io/badge/Paper-NeurIPS%202025-blue)](https://neurips.cc/virtual/2025/poster/115878)
 [![Best Paper](https://img.shields.io/badge/Award-Scholar%20Award-gold.svg)](https://neurips.cc/Conferences/2025/FinancialAssistance)
 
