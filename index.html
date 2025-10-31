@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DUAL: Dual Alignment Framework for Few-shot Learning with Inter-Set and Intra-Set Shifts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========= General Layout ========= */
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #222;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    main, header, section, footer {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ========= Navbar ========= */
+    .navbar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: white;
+      border-bottom: 1px solid #eee;
+      z-index: 999;
+    }
+
+    .nav-container {
+      max-width: 950px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      padding: 12px 20px;
+      gap: 24px;
+    }
+
+    .nav-container a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-container a:hover {
+      color: #007acc;
+    }
+
+    /* ========= Hero Banner ========= */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 60px;
+      background: linear-gradient(180deg, #fdfdfd 0%, #fafafa 100%);
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+    }
+
+    .hero h2 {
+      font-size: 1.4em;
+      font-weight: 400;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .hero .authors {
+      font-size: 1.2em;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .hero .affiliation {
+      font-size: 1.1em;
+      color: #666;
+      margin-bottom: 30px;
+      font-style: italic;
+    }
+
+    .hero .badges {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .hero .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+
+    .hero .badge:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero .badge.neurips {
+      background: linear-gradient(135deg, #4285f4, #34a853);
+      color: white;
+    }
+
+    .hero .badge.award {
+      background: linear-gradient(135deg, #ffb300, #ff8f00);
+      color: white;
+    }
+
+    .hero .links a {
+      display: inline-block;
+      margin: 0 12px;
+      padding: 12px 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .hero .links a:hover {
+      background: #333;
+      color: white;
+    }
+
+    /* ========= Section Titles ========= */
+    section h2 {
+      text-align: center;
+      font-size: 2.2em;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    section h3 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* ========= Grid Layouts ========= */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    /* ========= Cards ========= */
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border: 1px solid #e5e5e5;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .card h4 {
+      font-size: 1.3em;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .card.primary {
+      border-left: 4px solid #007acc;
+      background: linear-gradient(145deg, #f8feff 0%, #e6f7ff 100%);
+    }
+
+    .card.success {
+      border-left: 4px solid #52c41a;
+      background: linear-gradient(145deg, #f6ffed 0%, #d9f7be 100%);
+    }
+
+    .card.warning {
+      border-left: 4px solid #fa8c16;
+      background: linear-gradient(145deg, #fff7e6 0%, #ffd591 100%);
+    }
+
+    /* ========= Media ========= */
+    .media {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .media img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    /* ========= Code blocks ========= */
+    pre {
+      background: #f4f4f4;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9em;
+      line-height: 1.4;
+      border-left: 4px solid #007acc;
+    }
+
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.9em;
+      line-height: 1.4;
+      margin: 20px 0;
+    }
+
+    .code-block .comment {
+      color: #6a9955;
+    }
+
+    .code-block .keyword {
+      color: #569cd6;
+    }
+
+    .code-block .string {
+      color: #ce9178;
+    }
+
+    /* ========= Tables ========= */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.9em;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+
+    tr:hover {
+      background: #f5f5f5;
+    }
+
+    /* ========= Footer ========= */
+    footer {
+      text-align: center;
+      padding: 60px 20px;
+      background: #f9f9f9;
+      border-top: 1px solid #eee;
+      margin-top: 80px;
+    }
+
+    footer h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    footer p {
+      font-size: 1em;
+      color: #444;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    footer a {
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ========= Responsive ========= */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2em;
+      }
+      
+      .hero h2 {
+        font-size: 1.2em;
+      }
+
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-container {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#abstract">Abstract</a>
+      <a href="#method">Key Contributions</a>
+      <a href="#results">Results</a>
+      <a href="#code">Code</a>
+      <a href="#citation">Citation</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>DUAL</h1>
+    <h2>Dual Alignment Framework for Few-shot Learning with Inter-Set and Intra-Set Shifts</h2>
+    
+    <div class="badges">
+      <a href="https://neurips.cc/virtual/2025/poster/115878" class="badge neurips">NeurIPS 2025</a>
+      <a href="https://neurips.cc/Conferences/2025/FinancialAssistance" class="badge award">🏆 Scholar Award</a>
+    </div>
+    
+    <p class="authors">
+      Siyang Jiang, Rui Fang, Hsi-Wen Chen, Wei Ding, Guoliang Xing, Ming-Syan Chen
+    </p>
+    <p class="affiliation">
+      The Chinese University of Hong Kong (CUHK) • National Taiwan University (NTU)
+    </p>
+    
+    <div class="links">
+      <a href="docs/4711_Dual_Alignment_Framework_.pdf">[Paper]</a>
+      <a href="https://github.com/siyang-jiang/DUAL">[Code]</a>
+      <a href="#results">[Results]</a>
+    </div>
+  </header>
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p>
+      Few-shot learning (FSL) aims to classify unseen classes with limited labeled samples. 
+      However, real-world scenarios often involve <strong>distribution shifts</strong> between support and query sets, 
+      significantly degrading performance. We introduce <strong>DUAL</strong>, a novel framework that addresses both 
+      <strong>inter-set shifts</strong> (between support and query) and <strong>intra-set shifts</strong> (within individual sets) 
+      through a dual alignment mechanism.
+    </p>
+    <p>
+      DUAL employs <strong>adversarial training</strong> to learn robust feature representations and 
+      <strong>optimal transport</strong> to align distributions in embedding space. Our approach includes a 
+      pixel-level repairer network that mitigates corruption effects and a dual optimal transport mechanism 
+      that performs both intra-set and inter-set alignment. Extensive experiments demonstrate that DUAL 
+      achieves state-of-the-art performance across multiple benchmarks under realistic distribution shifts.
+    </p>
+  </section>
+
+  <section id="method">
+    <h2>Key Contributions</h2>
+    
+    <div class="grid-3">
+      <div class="card primary">
+        <h4>🎯 A New Challenge</h4>
+        <p>
+          <strong>Dual Support-Query Shift (DSQS)</strong>: We formalize the challenging scenario where both 
+          support and query sets experience distribution shifts, creating a more realistic but difficult 
+          few-shot learning setting.
+        </p>
+      </div>
+
+      <div class="card warning">
+        <h4>⚔️ Adversarial Training</h4>
+        <p>
+          <strong>Robust Feature Learning</strong>: Adversarial training with a generator network creates 
+          challenging examples, forcing the encoder to learn more robust and transferable representations.
+        </p>
+      </div>
+
+      <div class="card success">
+        <h4>🔄 Dual Alignment</h4>
+        <p>
+          <strong>Two-Stage Optimal Transport</strong>: First, intra-set alignment reduces within-set variance. 
+          Then, inter-set alignment bridges the gap between support and query distributions using optimal transport.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="results">
+    <h2>Experimental Results</h2>
+    
+    <h3>Performance on Standard Benchmarks</h3>
+    <p>
+      DUAL achieves state-of-the-art performance across multiple datasets under distribution shift scenarios:
+    </p>
+
+    <div class="grid-2">
+      <div class="card primary">
+        <h4>📊 CIFAR-100 Results</h4>
+        <table>
+          <tr>
+            <th>Method</th>
+            <th>1-shot</th>
+            <th>5-shot</th>
+          </tr>
+          <tr>
+            <td>ProtoNet</td>
+            <td>42.3±0.8</td>
+            <td>58.1±0.9</td>
+          </tr>
+          <tr>
+            <td>PGADA</td>
+            <td>45.7±0.9</td>
+            <td>62.4±0.8</td>
+          </tr>
+          <tr>
+            <td><strong>DUAL (Ours)</strong></td>
+            <td><strong>48.9±0.8</strong></td>
+            <td><strong>65.7±0.7</strong></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card success">
+        <h4>📊 mini-ImageNet Results</h4>
+        <table>
+          <tr>
+            <th>Method</th>
+            <th>1-shot</th>
+            <th>5-shot</th>
+          </tr>
+          <tr>
+            <td>ProtoNet</td>
+            <td>49.4±0.8</td>
+            <td>68.2±0.7</td>
+          </tr>
+          <tr>
+            <td>PGADA</td>
+            <td>52.3±0.9</td>
+            <td>71.5±0.6</td>
+          </tr>
+          <tr>
+            <td><strong>DUAL (Ours)</strong></td>
+            <td><strong>55.8±0.7</strong></td>
+            <td><strong>74.2±0.6</strong></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <h3>Key Findings</h3>
+    <div class="grid-3">
+      <div class="card">
+        <h4>🎯 Robustness to Shifts</h4>
+        <p>
+          DUAL maintains superior performance even under severe distribution shifts, 
+          demonstrating the effectiveness of our dual alignment approach.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4>⚡ Computational Efficiency</h4>
+        <p>
+          Despite the sophisticated alignment mechanism, DUAL maintains reasonable 
+          computational overhead with significant accuracy improvements.
+        </p>
+      </div>
+
+      <div class="card">
+        <h4>🔧 Ablation Studies</h4>
+        <p>
+          Each component (repairer, adversarial training, dual OT) contributes meaningfully 
+          to the overall performance, validating our design choices.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  
+
+
+
+  <section id="citation">
+    <h2>Citation</h2>
+    <p>If you use DUAL in your research, please cite our paper:</p>
+    <pre>
+@inproceedings{jiang2025dual,
+  title     = {Dual Alignment Framework for Few-shot Learning with Inter-Set and Intra-Set Shifts},
+  author    = {Jiang, Siyang and Fang, Rui and Chen, Hsi-Wen and Ding, Wei and Xing, Guoliang and Chen, Ming-Syan},
+  booktitle = {Proceedings of the 39th Annual Conference on Neural Information Processing Systems (NeurIPS 2025)},
+  year      = {2025}
+}
+    </pre>
+
+    <h3>Related Publications</h3>
+    <ul style="text-align: left; max-width: 800px; margin: 20px auto;">
+      <li><strong>PGADA:</strong> <a href="https://arxiv.org/abs/2205.03817">Perturbation-Guided Adversarial Alignment for FSL</a> (PAKDD 2022 Best Student Paper Award)</li>
+    </ul>
+
+    <h3>Contact Information</h3>
+    <p>For questions or collaborations:</p>
+    <ul style="text-align: left; max-width: 600px; margin: 20px auto;">
+      <li><strong>Primary Contact:</strong> <a href="mailto:syjiang@ie.cuhk.edu.hk">syjiang [AT] cuhk.edu.hk</a></li>
+      <li><strong>GitHub:</strong> <a href="https://github.com/siyang-jiang/DUAL">siyang-jiang/DUAL</a></li>
+      <li><strong>Paper:</strong> <a href="https://neurips.cc/virtual/2025/poster/115878">NeurIPS 2025</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <h2>Acknowledgments</h2>
+    <p>
+      This work was supported by research grants and computational resources from National Taiwan University, 
+      CUHK, and SUNY Buffalo. We thank the anonymous reviewers for their valuable feedback and suggestions. 
+      Special recognition goes to NeurIPS 2025 for the Scholar Award.
+    </p>
+    <p>
+      <strong>Broader Impact:</strong> DUAL advances few-shot learning robustness with applications in healthcare, 
+      autonomous driving, and resource-constrained environments. The framework promotes more reliable AI systems 
+      capable of handling real-world distribution shifts.
+    </p>
+  </footer>
+
+  <script>
+    // Smart smooth scroll to account for sticky navbar
+    document.querySelectorAll('.nav-container a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 10;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
